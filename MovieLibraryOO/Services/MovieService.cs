@@ -37,6 +37,7 @@ namespace MovieLibraryOO
             {
                 SetDatabaseMovies();
                 SetDatabaseGenres();
+                InitializeMovieDisplay();
             }
             catch (Exception e)
             {
@@ -56,7 +57,6 @@ namespace MovieLibraryOO
 
         public void DisplayMovie()
         {
-            InitializeMovieDisplay();
             // Display all Movies from the database
             try
             {
@@ -120,7 +120,6 @@ namespace MovieLibraryOO
         {
             try
             {
-                InitializeMovieDisplay();
                 bool b = false;
                 while (!b)
                 {
@@ -208,9 +207,11 @@ namespace MovieLibraryOO
 
         public void UpdateMovie()
         {
-            SearchService searchService = new SearchService();
-            var movieName = searchService.SearchMedia(_displayMovies);
+            /*SearchService searchService = new SearchService();
+            var movieName = searchService.SearchMedia(_displayMovies);*/
 
+            Console.WriteLine("Enter a title.");
+            var movieName = Console.ReadLine();
             List<Movie> movieList = new List<Movie>();
             if (movieName != "")
             {
@@ -242,49 +243,58 @@ namespace MovieLibraryOO
                 Console.WriteLine($"{NEWLINE}" +
                                   "Enter anything else to go back.");
 
-
-                int pickedChoice = Convert.ToInt32(Console.ReadLine());
-
-                Movie movie = movieList[pickedChoice - 1];
-                Movie old = movie;
-
-                Console.WriteLine(NEWLINE + movie.Display());
-
-                Console.WriteLine($"What would you like to modify?{NEWLINE}" +
-                                  $"1. Title{NEWLINE}" +
-                                  $"2. Genres{NEWLINE}" +
-                                  "Enter anything else to exit.");
-
-                pickedChoice = Convert.ToInt32(Console.ReadLine());
-                switch (pickedChoice)
+                int pickedChoice;
+                try
                 {
-                    case 1:
-                        _displayMovies.Remove(old.Display());
-                        // Console.WriteLine("Enter new title.");
-                        string newTitle = MovieNameValidation();
-                        movie.Title = newTitle;
-                        movie.ReleaseDate = releaseDate;
-                        _db.UpdateMovie(movie);
-                        _displayMovies.Add(movie.Display());
-                        Console.WriteLine($"Updated movie title.{NEWLINE}");
-                        break;
-                    case 2:
-                        _displayMovies.Remove(old.Display());
-                        _movie = movie;
-                        SetGenres();
-                        SetMovieGenre();
-                        _db.DeleteMovieGenre(_movie);
+                    pickedChoice = Convert.ToInt32(Console.ReadLine());
+                }
+                catch (Exception e)
+                {
+                    pickedChoice = 0;
+                }
 
-                        foreach (var mg in _dbMovieGenres)
-                        {
-                            _db.UpdateMovieGenre(mg);
-                        }
+                if (pickedChoice != 0)
+                {
+                    Movie movie = movieList[pickedChoice - 1];
+                    Movie old = movie;
 
-                        _movie.MovieGenres = _dbMovieGenres;
-                        _displayMovies.Add(_movie.Display());
+                    Console.WriteLine(NEWLINE + movie.Display());
 
-                        Console.WriteLine($"Updated movie genres.{NEWLINE}");
-                        break;
+                    Console.WriteLine($"What would you like to modify?{NEWLINE}" +
+                                      $"1. Title{NEWLINE}" +
+                                      $"2. Genres{NEWLINE}" +
+                                      "Enter anything else to exit.");
+
+                    string choice = Console.ReadLine();
+                    switch (choice)
+                    {
+                        case "1":
+                            _displayMovies.Remove(old.Display());
+                            string newTitle = MovieNameValidation();
+                            movie.Title = newTitle;
+                            movie.ReleaseDate = releaseDate;
+                            _db.UpdateMovie(movie);
+                            _displayMovies.Add(movie.Display());
+                            Console.WriteLine($"Updated movie title.{NEWLINE}");
+                            break;
+                        case "2":
+                            _displayMovies.Remove(old.Display());
+                            _movie = movie;
+                            SetGenres();
+                            SetMovieGenre();
+                            _db.DeleteMovieGenre(_movie);
+
+                            foreach (var mg in _dbMovieGenres)
+                            {
+                                _db.UpdateMovieGenre(mg);
+                            }
+
+                            _movie.MovieGenres = _dbMovieGenres;
+                            _displayMovies.Add(_movie.Display());
+
+                            Console.WriteLine($"Updated movie genres.{NEWLINE}");
+                            break;
+                    } 
                 }
             }
             else
@@ -342,15 +352,22 @@ namespace MovieLibraryOO
             Console.WriteLine("Enter movie to delete.");
             string input = Console.ReadLine();
             SetDatabaseMovies();
+            int detected = 0;
             foreach (var movie in _dbMovies)
             {
                 if (movie.Title.Substring(0, movie.Title.Length - 7) == input)
                 {
+                    detected = 1;
                     _displayMovies.Remove(movie.Display());
                     _db.DeleteMovieGenre(movie);
                     _db.DeleteMovie(movie);
                     Console.WriteLine("Movie deleted.");
                 }
+            }
+
+            if (detected == 0)
+            {
+                Console.WriteLine("Invalid movie.");
             }
         }
     }

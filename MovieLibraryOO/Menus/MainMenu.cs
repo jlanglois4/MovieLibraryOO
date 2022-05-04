@@ -12,14 +12,14 @@ namespace MovieLibraryOO
             var choice = true;
             do
             {
-                Console.WriteLine(
-                    "Welcome to the Movie Library.\n" +
-                    "1. List movies.\n" +
-                    "2. Add movie.\n" +
-                    "3. Search movies.\n" +
-                    "4. Modify movie.\n" +
-                    "5. Delete movie.\n" +
-                    "Enter anything else to exit the program.");
+                Console.WriteLine("\n" +
+                                  "Welcome to the Movie Library.\n" +
+                                  "1. List movies.\n" +
+                                  "2. Add movie.\n" +
+                                  "3. Search movies.\n" +
+                                  "4. Modify movie.\n" +
+                                  "5. Delete movie.\n" +
+                                  "Enter anything else to exit the program.");
                 var pickedChoice = Console.ReadLine();
                 switch (pickedChoice)
                 {
