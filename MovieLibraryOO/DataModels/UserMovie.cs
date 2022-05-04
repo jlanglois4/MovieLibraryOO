@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace MovieLibraryOO.DataModels
 {
+    // Ratings for a movie by a user
     public class UserMovie
     {
         public long Id { get; set; }

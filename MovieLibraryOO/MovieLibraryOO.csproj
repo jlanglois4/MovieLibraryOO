@@ -7,11 +7,7 @@
     <EmbeddedResource Include="Files\**\*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <None Remove="appsettings.json" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>

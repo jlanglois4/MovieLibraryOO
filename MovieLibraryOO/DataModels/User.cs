@@ -5,6 +5,7 @@ namespace MovieLibraryOO.DataModels
 {
     public class User
     {
+        // User information, age, gender, zipcode, occupation (name, occupation), and list of movies rated by the user
         public long Id { get; set; }
         public long Age { get; set; }
         public string Gender { get; set; }

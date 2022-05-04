@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using MovieLibraryOO.DataModels;
@@ -13,6 +14,38 @@ namespace MovieLibraryOO.Context
         public DbSet<Occupation> Occupations {get;set;}
         public DbSet<User> Users {get;set;}
         public DbSet<UserMovie> UserMovies {get;set;}
+        public void AddMovieGenre(MovieGenre movieGenre)
+        {
+            this.MovieGenres.Add(movieGenre);
+            this.SaveChanges();
+        }
+
+        public void UpdateMovie(Movie movie)
+        {
+            this.Movies.Update(movie);
+            this.SaveChanges();
+        }
+        
+        public void UpdateMovieGenre(MovieGenre movieGenre)
+        {
+            this.MovieGenres.Update(movieGenre);
+            this.SaveChanges();
+        }
+        
+        public void DeleteMovie(Movie movie)
+        {
+            this.Movies.Remove(movie);
+            this.SaveChanges();
+        }
+        
+        public void DeleteMovieGenre(Movie movie)
+        {
+            foreach (var mg in movie.MovieGenres)
+            {
+                this.MovieGenres.Remove(mg);
+            }
+            this.SaveChanges();
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -22,8 +55,6 @@ namespace MovieLibraryOO.Context
                 .Build();
 
             optionsBuilder.UseLazyLoadingProxies().UseSqlServer(configuration.GetConnectionString("MovieContext"));
-
-            //optionsBuilder.UseLazyLoadingProxies().UseSqlServer(@"Server=bitsql.wctc.edu;Database=mmcarthey_12090_Movie;User ID=mmcarthey;Password=000075813;");
         }
     }
 }
