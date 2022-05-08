@@ -13,5 +13,14 @@ namespace MovieLibraryOO.DataModels
 
         public virtual Occupation Occupation { get; set; }
         public virtual ICollection<UserMovie> UserMovies {get;set;}
+        
+        public string Display()
+        {
+            return $"ID: {Id}\n" +
+                   $"Age: {Age}\n" +
+                   $"Gender: {Gender}\n" +
+                   $"ZIP code: {ZipCode}\n" +
+                   $"Occupation: {Occupation.Name}\n";
+        }
     }
 }

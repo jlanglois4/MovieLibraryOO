@@ -57,10 +57,6 @@ namespace MovieLibraryOO
                             startPoint = list.Count;
                             Console.WriteLine("Exit.");
                         }
-                        else
-                        {
-                            Console.WriteLine("Continue.");
-                        }
                     }
                     else
                     {

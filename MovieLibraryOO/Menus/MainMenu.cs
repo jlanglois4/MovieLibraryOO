@@ -12,6 +12,11 @@ namespace MovieLibraryOO
             var choice = true;
             do
             {
+                if (movieDbService.exit)
+                {
+                    Console.WriteLine("Exiting program.");
+                    return;
+                }
                 Console.WriteLine("\n" +
                                   "Welcome to the Movie Library.\n" +
                                   "1. List movies.\n" +
@@ -19,6 +24,9 @@ namespace MovieLibraryOO
                                   "3. Search movies.\n" +
                                   "4. Modify movie.\n" +
                                   "5. Delete movie.\n" +
+                                  "6. Add user.\n" +
+                                  "7. Rate movie.\n" +
+                                  "8. List top rated movie.\n" +
                                   "Enter anything else to exit the program.");
                 var pickedChoice = Console.ReadLine();
                 switch (pickedChoice)
@@ -37,6 +45,15 @@ namespace MovieLibraryOO
                         break;
                     case "5":
                         movieDbService.DeleteMovie();
+                        break;
+                    case "6":
+                        movieDbService.AddUser();
+                        break;
+                    case "7":
+                        movieDbService.RateMovie();
+                        break;
+                    case "8":
+                        movieDbService.ListTopRatedMovies();
                         break;
                     default:
                         Console.WriteLine("Thank you for using the Media Library.");

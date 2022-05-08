@@ -20,6 +20,18 @@ namespace MovieLibraryOO.Context
             this.SaveChanges();
         }
 
+        public void AddUser(User user)
+        {
+            this.Users.Add(user);
+            this.SaveChanges();
+        }
+        
+        public void AddUserMovie(UserMovie userMovie)
+        {
+            this.UserMovies.Add(userMovie);
+            this.SaveChanges();
+        }
+
         public void UpdateMovie(Movie movie)
         {
             this.Movies.Update(movie);
