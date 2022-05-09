@@ -76,13 +76,14 @@ namespace MovieLibraryOO
 
                 var title = MovieNameValidation();
 
-                var movieId = _dbMovies.Count() + 1;
+                
                 _movie = new Movie {Title = title, ReleaseDate = releaseDate};
                 SetGenres();
                 SetMovieGenre();
+                var movieId = _db.Movies.Max(mov => mov.Id);
                 _db.AddMovieGenre(_movieGenre);
 
-
+                
                 var finalMovie = new Movie
                     {Id = movieId, Title = title, ReleaseDate = releaseDate, MovieGenres = _dbMovieGenres};
 
